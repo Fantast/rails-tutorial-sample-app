@@ -7,6 +7,9 @@
 #idea ignores
 /.idea/.rakeTasks
 /.idea/workspace.xml
+/.idea/dataSources.local.xml
+/.idea/dataSources.ids
+
 
 # Ignore bundler config.
 /.bundle
