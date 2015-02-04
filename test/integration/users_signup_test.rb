@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
 
-  test "invalid form submission should not create a user" do
+  test "invalid form submission" do
     get signup_path
     assert_no_difference 'User.count' do
       post users_path, user: {name: '',
@@ -13,9 +13,12 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
 
     assert_template 'users/new'
+    assert_select 'div#error_explanation'
+    assert_select 'div.field_with_errors input[type=email]'
+    assert_select 'div.field_with_errors input[type=password]'
   end
 
-  test "valid form submission should create a user" do
+  test "valid form submission" do
     get signup_path
     assert_difference 'User.count', 1 do
       post_via_redirect users_path, user: {name: 'Example User',
@@ -26,5 +29,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
 
     assert_template 'users/show'
+    assert_not flash.empty?
+    assert_select 'div.alert-success'
   end
 end
